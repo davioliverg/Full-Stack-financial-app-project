@@ -1,184 +1,354 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+:root {
+  --bg: #14161c;
+  --surface: #1e212b;
+  --surface-2: #262a36;
+  --border: #333846;
+  --text: #f1f2f6;
+  --text-muted: #9aa0ac;
+  --accent: #6c8cff;
+  --income: #3ddc97;
+  --expense: #ff6b6b;
+  --warning: #ffb85c;
+  --radius: 10px;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+* {
+  box-sizing: border-box;
 }
 
-#center {
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Formulários genéricos */
+
+input, select, button {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+input, select {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+.auth-box {
+  max-width: 340px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.login-form {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  gap: 10px;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.auth-toggle {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
+.link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
   padding: 0;
+  cursor: pointer;
+}
+
+.link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.erro {
+  color: var(--expense);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.mensagem-sucesso {
+  color: var(--income);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.form-inline {
   display: flex;
   gap: 8px;
-  margin: 32px 0 0;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
 
-  .logo {
-    height: 18px;
-  }
+.form-inline input, .form-inline select {
+  flex: 1;
+  min-width: 100px;
+}
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
+/* Cards de resumo */
 
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
+.resumo-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+.card {
+  flex: 1;
+  min-width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
+.card-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
 
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
+.card-valor {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.card.receita .card-valor { color: var(--income); }
+.card.despesa .card-valor { color: var(--expense); }
+.card.saldo.positivo .card-valor { color: var(--income); }
+.card.saldo.negativo .card-valor { color: var(--expense); }
+
+/* Filtros */
+
+.filtros {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.filtros select, .filtros input {
+  flex: 1;
+  min-width: 130px;
+}
+
+/* Layout principal em duas colunas */
+
+.grid-principal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 720px) {
+  .grid-principal {
+    grid-template-columns: 1fr;
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.painel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.painel h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.mensagem-carregando, .mensagem-vazia {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 8px 0;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* Lista de transações */
+
+.lista-transacoes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transacao-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface-2);
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  padding: 10px 14px;
+  flex-wrap: wrap;
+}
+
+.transacao-item.income { border-left-color: var(--income); }
+.transacao-item.expense { border-left-color: var(--expense); }
+
+.transacao-info {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.transacao-categoria {
+  color: var(--text);
+}
+
+.transacao-valor {
+  font-weight: 600;
+}
+
+.transacao-item.income .transacao-valor { color: var(--income); }
+.transacao-item.expense .transacao-valor { color: var(--expense); }
+
+.transacao-item.editando {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.acoes {
+  display: flex;
+  gap: 6px;
+}
+
+.acoes button {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+.btn-editar { background: var(--surface); border: 1px solid var(--border); }
+.btn-excluir { background: var(--expense); }
+.btn-salvar { background: var(--income); }
+.btn-cancelar { background: var(--surface); border: 1px solid var(--border); }
+
+/* Lista de orçamentos */
+
+.lista-orcamentos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.orcamento-item {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.orcamento-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.orcamento-categoria {
+  font-weight: 600;
+}
+
+.orcamento-valores {
+  color: var(--text-muted);
+}
+
+.barra-progresso {
+  background: var(--bg);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.barra-preenchida {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.barra-preenchida.estourado {
+  background: var(--expense);
+}
+
+.orcamento-percentual {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
 }
