@@ -92,7 +92,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch((err) => console.error('Erro ao conectar:', err));
 
-app.listen(4000, () => console.log('Rodando na porta 4000'));
+app.listen(process.env.PORT || 4000, () => console.log('Servidor rodando'));
 
 
 const jwt = require('jsonwebtoken');
