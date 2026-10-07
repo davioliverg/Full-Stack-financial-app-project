@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 const API_URL = import.meta.env.VITE_API_URL
-
+const CATEGORIAS = ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Salário', 'Outros']
 function formatarMoeda(valor) {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(valor)
 }
@@ -204,7 +204,12 @@ function NovaTransacao({ token, setTransacoes }) {
         <option value="income">Receita</option>
       </select>
       <input type="number" value={valor} onChange={(e) => setValor(e.target.value)} placeholder="Valor" />
-      <input type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} placeholder="Categoria" />
+      <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+        <option value="">Selecione a categoria</option>
+        {CATEGORIAS.map(cat => (
+          <option key={cat} value={cat}>{cat}</option>
+        ))}
+      </select>
       <button type="submit">Adicionar</button>
     </form>
   )
@@ -282,7 +287,12 @@ function NovoOrcamento({ token, setOrcamentos }) {
 
   return (
     <form className="form-inline" onSubmit={handleSubmit}>
-      <input type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} placeholder="Categoria" />
+      <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+        <option value="">Selecione a categoria</option>
+        {CATEGORIAS.map(cat => (
+          <option key={cat} value={cat}>{cat}</option>
+        ))}
+      </select>
       <input type="number" value={limite} onChange={(e) => setLimite(e.target.value)} placeholder="Limite" />
       <button type="submit">Definir orçamento</button>
     </form>
