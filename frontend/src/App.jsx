@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 const API_URL = import.meta.env.VITE_API_URL
 const CATEGORIAS = ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Salário', 'Outros']
+const METODOS_PAGAMENTO = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'transferência bancária', 'Mbway', ]
 function formatarMoeda(valor) {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(valor)
 }
@@ -173,6 +174,7 @@ function NovaTransacao({ token, setTransacoes }) {
   const [tipo, setTipo] = useState('expense')
   const [valor, setValor] = useState('')
   const [categoria, setCategoria] = useState('')
+  const [metodoPagamento, setMetodoPagamento] = useState('')
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -208,6 +210,13 @@ function NovaTransacao({ token, setTransacoes }) {
         <option value="">Selecione a categoria</option>
         {CATEGORIAS.map(cat => (
           <option key={cat} value={cat}>{cat}</option>
+        ))}
+
+      </select>
+      <select value={metodoPagamento} onChange={(e) => setMetodoPagamento(e.target.value)}>
+        <option value="">Selecione o método de pagamento</option>
+        {METODOS_PAGAMENTO.map(metodo => (
+          <option key={metodo} value={metodo}>{metodo}</option>
         ))}
       </select>
       <button type="submit">Adicionar</button>
@@ -259,6 +268,25 @@ function ListaDeOrcamentos({ token, orcamentos, setOrcamentos, transacoes }) {
     </ul>
   )
 }
+function ResumoPorFormaPagamento({ transacoes }) {
+  const despesas = transacoes.filter(t => t.type === 'expense')
+
+  return (
+    <ul className="lista-formas-pagamento">
+      {METODOS_PAGAMENTO.map(metodo => {
+        const doMetodo = despesas.filter(t => t.paymentMethod === metodo)
+        const total = doMetodo.reduce((acc, t) => acc + t.amount, 0)
+
+        return (
+          <li key={metodo} className="forma-pagamento-item">
+            <span className="forma-pagamento-nome">{metodo}</span>
+            <span className="forma-pagamento-valor">{formatarMoeda(total)}</span>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
 
 function NovoOrcamento({ token, setOrcamentos }) {
   const [categoria, setCategoria] = useState('')
@@ -274,13 +302,17 @@ function NovoOrcamento({ token, setOrcamentos }) {
       },
       body: JSON.stringify({
         category: categoria,
+        paymentMethod: metodoPagamento,
         limit: Number(limite)
+
       })
+
     })
       .then(res => res.json())
       .then(novo => {
         setOrcamentos(anteriores => [...anteriores, novo])
         setCategoria('')
+        setMetodoPagamento('')
         setLimite('')
       })
   }
@@ -378,6 +410,10 @@ function App() {
               <span className="card-label">Saldo</span>
               <span className="card-valor">{formatarMoeda(saldo)}</span>
             </div>
+          </section>
+          <section className="painel">
+            <h2>Gastos por Forma de Pagamento</h2>
+            <ResumoPorFormaPagamento transacoes={transacoesFiltradas} />
           </section>
 
           <section className="filtros">

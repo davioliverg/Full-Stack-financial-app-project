@@ -352,3 +352,25 @@ button:hover {
   color: var(--text-muted);
   text-align: right;
 }
+
+.lista-formas-pagamento {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.forma-pagamento-item {
+  display: flex;
+  justify-content: space-between;
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.forma-pagamento-valor {
+  font-weight: 600;
+  color: var(--expense);
+}
