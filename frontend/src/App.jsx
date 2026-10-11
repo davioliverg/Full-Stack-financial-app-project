@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const API_URL = import.meta.env.VITE_API_URL
 const CATEGORIAS = ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Salário', 'Outros']
 const METODOS_PAGAMENTO = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'transferência bancária', 'Mbway', ]
