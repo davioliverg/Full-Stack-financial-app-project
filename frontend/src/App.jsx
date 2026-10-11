@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { SpeedInsights } from "@vercel/speed-insights/next"
 const API_URL = import.meta.env.VITE_API_URL
 const CATEGORIAS = ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Salário', 'Outros']
-const METODOS_PAGAMENTO = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'transferência bancária', 'Mbway', ]
+const METODOS_PAGAMENTO = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'transferência bancária', 'Mbway',]
 function formatarMoeda(valor) {
   return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(valor)
 }
@@ -189,6 +188,7 @@ function NovaTransacao({ token, setTransacoes }) {
         type: tipo,
         amount: Number(valor),
         category: categoria,
+        paymentMethod: metodoPagamento,
         date: new Date()
       })
     })
